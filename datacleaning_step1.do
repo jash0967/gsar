@@ -1,11 +1,11 @@
 clear
 
-use "C:\Users\jkshi\Documents\Datasets\datav4.0\Data\2. Demographics and Outcomes\individual_characteristics.dta"
+use ".\datav4.0\Data\2. Demographics and Outcomes\individual_characteristics.dta"
 drop if resp_status==2 | resp_status==3
 duplicates drop hhid, force
-save "C:\Users\jkshi\Documents\Datasets\datav4.0\Data\2. Demographics and Outcomes\individual_characteristics_headonly.dta", replace
+save ".\datav4.0\Data\2. Demographics and Outcomes\individual_characteristics_headonly.dta", replace
 
-use "C:\Users\jkshi\Documents\Datasets\datav4.0\Data\2. Demographics and Outcomes\household_characteristics.dta"
+use ".\datav4.0\Data\2. Demographics and Outcomes\household_characteristics.dta"
 
 g caste=1 if castesubcaste=="SCHEDULE CASTE"
 replace caste=2 if castesubcaste=="SCHEDULE TRIBE"
@@ -13,12 +13,12 @@ replace caste=3 if castesubcaste=="OBC"
 replace caste=4 if castesubcaste=="GENERAL"
 replace caste=5 if castesubcaste=="MINORITY"
 
-merge 1:1 hhid using "C:\Users\jkshi\Documents\Datasets\datav4.0\Data\2. Demographics and Outcomes\individual_characteristics_headonly.dta", keepusing(caste) update replace
+merge 1:1 hhid using ".\datav4.0\Data\2. Demographics and Outcomes\individual_characteristics_headonly.dta", keepusing(caste) update replace
 replace caste=5 if caste==-999
 
 drop _merge
 rename hohreligion religion
-merge 1:1 hhid using "C:\Users\jkshi\Documents\Datasets\datav4.0\Data\2. Demographics and Outcomes\individual_characteristics_headonly.dta", keepusing(religion) update replace
+merge 1:1 hhid using ".\datav4.0\Data\2. Demographics and Outcomes\individual_characteristics_headonly.dta", keepusing(religion) update replace
 
 drop _merge castesubcaste
 drop hhSurveyed adjmatrix_key
@@ -95,4 +95,4 @@ drop caste
 drop rel_hin
 order caste_obc, last // the obc variable will be used only for a network specification
 
-export delimited using "C:\Users\jkshi\Desktop\hh_cov_cleaned.csv", nolabel replace
+export delimited using ".\processed\hh_cov_cleaned.csv", nolabel replace

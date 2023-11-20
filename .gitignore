@@ -1,0 +1,9 @@
+datav4.0/
+2010-0760_Data/
+output/
+*.asv
+.idea/
+.conda/
+processed/
+*.zip
+*.csv
